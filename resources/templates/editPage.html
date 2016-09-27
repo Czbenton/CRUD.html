@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Hero Info</title>
+</head>
+<body>
+
+{{#hero}}
+{{#owner}}
+
+HERO NAME IS: {{heroName}}
+
+
+<form action="/editHero" method="post">
+    <input type="hidden" value="{{heroName}}" name="heroName">
+    <input type="text" placeholder="Secret Identity" name="secretIdentity">
+    <input type="text" placeholder="Super Hero Name" name="heroName">
+    <input type="text" placeholder="Age" name="age">
+    <input type="text" placeholder="Known Powers (use comma separators)" name="powersString">
+    <input type="text" placeholder="Primary Costume Color" name="primaryColor">
+    <input type="text" placeholder="Secondary Costume Color" name="secondaryColor">
+    <button type="submit">Submit Information</button>
+</form>
+{{/owner}}
+{{/hero}}
+
+
+</body>
+</html>

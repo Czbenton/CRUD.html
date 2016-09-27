@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HERO'S UNITE!!</title>
+</head>
+<body>
+{{^userName}}
+<form action="/login" method="post">
+    <input type="text" placeholder="Enter name" name="loginName">
+    <input type="text" placeholder="Enter password" name="password">
+    <button type="submit">Login</button>
+</form>
+<br>
+{{/userName}}
+
+{{#userName}}
+<h2>Welcome, {{.}}</h2>
+<form method="post" action="/logout">
+    <button type="submit">Logout</button>
+</form>
+<br>
+
+<form action="/newEntry" method="post">
+    <!--<input type="hidden" name="id" value=?????>-->
+    <input type="text" placeholder="Secret Identity" name="secretIdentity">
+    <input type="text" placeholder="Super Hero Name" name="heroName">
+    <input type="text" placeholder="Age" name="age">
+    <input type="text" placeholder="Known Powers (use comma separators)" name="powersString" size="40">
+    <input type="text" placeholder="Primary Costume Color" name="primaryColor">
+    <input type="text" placeholder="Secondary Costume Color" name="secondaryColor" size="25">
+    <button type="submit">Submit Information</button>
+
+</form>
+
+{{/userName}}
+
+<ol>
+    {{#hero}}
+    <li>
+        {{.}}
+    </li>
+
+    <br>
+    {{#owner}}
+
+    HERO NAME IS: {{heroName}}
+
+    <form action="/deleteHero" method="post">
+        <input type="hidden" value="{{heroName}}" name="heroName">
+        <button type="submit">Delete</button>
+    </form>
+
+    <form action="/editPage" method="get">
+        <button type="submit">Edit Hero</button>
+    </form>
+    {{/owner}}
+
+    {{/hero}}
+</ol>
+
+
+</body>
+</html>
