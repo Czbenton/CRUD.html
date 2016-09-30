@@ -54,6 +54,10 @@ public class CRUD {
                         user = new User(username,password);
                         users.put(username, user);
                     }
+                    if ( ! users.get(username).password.equals(password)){
+                        response.redirect("");
+                        return "";
+                    }
                     Session session = request.session();
                     session.attribute("userName", username);
 
@@ -79,8 +83,6 @@ public class CRUD {
                         throw new Exception("not logged in");
                     }
 
-
-
                     String secretIdentity = request.queryParams("secretIdentity");
                     String heroName = request.queryParams("heroName");
                     int age = Integer.parseInt(request.queryParams("age"));
@@ -89,10 +91,9 @@ public class CRUD {
                     String primaryCostumeColor = request.queryParams("primaryColor");
                     String secondaryCostumeColor = request.queryParams("secondaryColor");
 
-                    SuperHero superHero = new SuperHero(userName, secretIdentity,heroName,age,powersList,primaryCostumeColor,secondaryCostumeColor);
+                    SuperHero superHero = new SuperHero(heroList.size(), userName, secretIdentity,heroName,age,powersList,primaryCostumeColor,secondaryCostumeColor);
 
                     heroList.add(superHero);
-
 
                     response.redirect(request.headers("Referer"));
                     return "";
@@ -119,27 +120,19 @@ public class CRUD {
                 ((request, response) -> {
                     Session session = request.session();
                     String userName = session.attribute("userName");
-                    String heroName = session.attribute("heroName");
-                    SuperHero toEdit = new SuperHero();
-                    for (SuperHero s: heroList) {
-                        if(s.heroName.equalsIgnoreCase(heroName)){
-                            toEdit = s;
-                        }
-                    }
-                    heroList.remove(toEdit);
+                    int index = session.attribute("index");
 
                     String secretIdentity = request.queryParams("secretIdentity");
-                    String newHeroName = request.queryParams("heroName");
+                    String newHeroName = request.queryParams("newHeroName");
                     int age = Integer.parseInt(request.queryParams("age"));
                     String powersString = request.queryParams("powersString");
                     ArrayList<String> powersList = new ArrayList<String>(Arrays.asList( powersString.split(",")));
                     String primaryCostumeColor = request.queryParams("primaryColor");
                     String secondaryCostumeColor = request.queryParams("secondaryColor");
 
-                    SuperHero superHero = new SuperHero(userName, secretIdentity,newHeroName,age,powersList,primaryCostumeColor,secondaryCostumeColor);
+                    SuperHero superHero = new SuperHero(heroList.size(), userName, secretIdentity,newHeroName,age,powersList,primaryCostumeColor,secondaryCostumeColor);
 
-
-                    heroList.add(superHero);
+                    heroList.set(index,superHero);
 
                     response.redirect("/");
                     return "";
@@ -151,6 +144,8 @@ public class CRUD {
                     HashMap m = new HashMap();
                     Session session = request.session();
                     String userName = session.attribute("userName");
+                    int index = Integer.parseInt(request.queryParams("index"));
+                    session.attribute("index", index);
 
                     for (SuperHero s : heroList ){
                         if(s.userName.equalsIgnoreCase(userName)) {
@@ -159,19 +154,17 @@ public class CRUD {
                             s.owner = null;
                         }
                     }
-
-                    m.put("hero",heroList);
+                    m.put("hero",heroList.get(index));
                     return new ModelAndView(m,"editPage.html");
                 }),
                 new MustacheTemplateEngine()
         );
-
     }
 
     public static void addTestInformation(){
         ArrayList<String> powers = new ArrayList<>(Arrays.asList("billionaire","martial arts","genius","world's greatest detective"));
 
-        SuperHero superHero = new SuperHero("zach","Bruce Wayne", "Batman", 30, powers,"black","grey");
+        SuperHero superHero = new SuperHero(0,"zach","Bruce Wayne", "Batman", 30, powers,"black","grey");
 
         heroList.add(superHero);
     }

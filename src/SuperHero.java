@@ -4,6 +4,7 @@ import java.util.ArrayList;
  * Created by Zach on 9/26/16.
  */
 public class SuperHero {
+    int index;
     String secretIdentity;
     String heroName;
     int age;
@@ -15,8 +16,9 @@ public class SuperHero {
 
     public SuperHero(){}
 
-    public SuperHero(String ownerName, String secretIdentity, String heroName, int age, ArrayList<String> knownHeroPowers,
+    public SuperHero(int index, String ownerName, String secretIdentity, String heroName, int age, ArrayList<String> knownHeroPowers,
                      String primaryCostumeColor, String secondaryCostumeColor) {
+        this.index = index;
         this.userName = ownerName;
         this.secretIdentity = secretIdentity;
         this.heroName = heroName;

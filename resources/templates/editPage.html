@@ -9,13 +9,11 @@
 {{#hero}}
 {{#owner}}
 
-HERO NAME IS: {{heroName}}
-
 
 <form action="/editHero" method="post">
     <input type="hidden" value="{{heroName}}" name="heroName">
     <input type="text" placeholder="Secret Identity" name="secretIdentity">
-    <input type="text" placeholder="Super Hero Name" name="heroName">
+    <input type="text" placeholder="Super Hero Name" name="newHeroName">
     <input type="text" placeholder="Age" name="age">
     <input type="text" placeholder="Known Powers (use comma separators)" name="powersString">
     <input type="text" placeholder="Primary Costume Color" name="primaryColor">
